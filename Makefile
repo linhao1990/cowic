@@ -22,26 +22,29 @@ CXXFLAGS += -MD -MP
 AR_CMD = ar
 #The option cr stands for "create and replace"
 AR_OPT = cr 
-AR_LIB = lib/cowic.a
+AR_DIR = lib
+AR_LIB = $(AR_DIR)/cowic.a
 
 
 SRCS = $(wildcard $(SRC_DIR)/*/*.cpp)
 
 OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS)) 
-OBJ_SUB_DIRS := $(sort $(dir $(OBJS)))
+DEP_DIRS := $(sort $(dir $(OBJS)))
+DEP_DIRS += $(AR_DIR)
+DEP_DIRS += $(BIN_DIR)
 DEPS = $(OBJS:.o=.d)
 
 all : $(OBJS) 
 	$(AR_CMD) $(AR_OPT) $(AR_LIB) $(OBJS)
 
 # make objects depend on folders
-$(OBJS): | $(OBJ_SUB_DIRS)
+$(OBJS): | $(DEP_DIRS) 
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp
 	${CXX} ${CXXFLAGS} -c $< -o $@ $(addprefix -I,$(INCLUDE_DIR)) 
 
 # create obj folders if not exist
-$(OBJ_SUB_DIRS): 
+$(DEP_DIRS): 
 	mkdir -p $@
 
 -include $(DEPS)
