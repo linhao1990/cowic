@@ -3,7 +3,7 @@
  * Cowic is released under the New BSD license (see LICENSE.txt). Go to the
  * project home page for more info:
  *
- * HOMEPAGE_URL
+ * https://github.com/linhao1990/cowic.git
  */
 //number_encoder.h
 
