@@ -14,9 +14,10 @@
 
 #include "abstract_number.h"
 
-class Number : public AbstractNumber{
+template <typename T>
+class Number : public AbstractNumber<T>{
 public:
-    Number(unsigned int numericVal, const string& beforeVal, const string& afterVal);
+    Number(T numericVal, const string& beforeVal, const string& afterVal);
     bool isIllegal() const;
     static Number parse(const string& ipStr);
     static const Number illegal;

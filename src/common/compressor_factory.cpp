@@ -56,7 +56,9 @@ shared_ptr<Model> CompressorFactory::createColumnModel(const ColumnModelType& co
         case ColumnModelType::IP:
             return shared_ptr<Model>(new IPModel());
         case ColumnModelType::Number:
-            return shared_ptr<Model>(new NumberModel());
+            return shared_ptr<Model>(new NumberModel<unsigned int>());
+        case ColumnModelType::LongNumber:
+            return shared_ptr<Model>(new NumberModel<unsigned long long>());
         case ColumnModelType::FixPrecisionNumber:
             return shared_ptr<Model>(new FixPrecisionNumberModel());
         default:
@@ -157,7 +159,9 @@ shared_ptr<Model> CompressorFactory::createSpecifyColumnModel(const SpecifyConfi
         case SpecifyColumnModelType::IP:
             return shared_ptr<Model>(new IPModel(defaultColumnModelPtr));
         case SpecifyColumnModelType::Number:
-            return shared_ptr<Model>(new NumberModel(defaultColumnModelPtr));
+            return shared_ptr<Model>(new NumberModel<unsigned int>(defaultColumnModelPtr));
+        case SpecifyColumnModelType::LongNumber:
+            return shared_ptr<Model>(new NumberModel<unsigned long long>(defaultColumnModelPtr));
         case SpecifyColumnModelType::FixPrecisionNumber:
             {
             unsigned int precision = atoi(specifyConfig.getArg().c_str());

@@ -52,6 +52,7 @@ enum class ColumnModelType{
     Timestamp,
     IP,
     Number,
+    LongNumber,
     FixPrecisionNumber
 };
 template <>
@@ -68,6 +69,7 @@ enum class SpecifyColumnModelType{
     Timestamp,
     IP,
     Number,
+    LongNumber,
     FixPrecisionNumber
 };
 template <>

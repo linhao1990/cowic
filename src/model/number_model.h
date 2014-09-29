@@ -12,14 +12,16 @@
 
 #include "abstract_number_model.h"
 
-class NumberModel : public AbstractNumberModel{
+template <typename T>
+class NumberModel : public AbstractNumberModel<T>{
 public:
     NumberModel();
     NumberModel(const shared_ptr<DictionaryModel>& dictModelPtrVal);
-    shared_ptr<AbstractNumber> parseColumnStr(const string& columnStr);
-    string toPlainStr(unsigned int num, const string& before, const string& after) const;
+    shared_ptr<AbstractNumber<T> > parseColumnStr(const string& columnStr);
+    string toPlainStr(T num, const string& before, const string& after) const;
     string getModelName() const;
 private:
+    static const string name;
 };
 
 #endif

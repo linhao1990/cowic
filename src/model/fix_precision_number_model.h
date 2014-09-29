@@ -13,7 +13,7 @@
 #include "abstract_number_model.h"
 #include "number_encoder.h"
 
-class FixPrecisionNumberModel : public AbstractNumberModel{
+class FixPrecisionNumberModel : public AbstractNumberModel<unsigned int>{
 public:
     FixPrecisionNumberModel();
     FixPrecisionNumberModel(const shared_ptr<DictionaryModel>& dictModelPtrVal, unsigned int precisionVal);
@@ -21,7 +21,7 @@ public:
     void parse(string& dumpStr);
     BitArray compressNumber(unsigned int num);
     int decompressNumber(BinaryCode& code, unsigned int& num) const;
-    shared_ptr<AbstractNumber> parseColumnStr(const string& columnStr);
+    shared_ptr<AbstractNumber<unsigned int> > parseColumnStr(const string& columnStr);
     string toPlainStr(unsigned int num, const string& before, const string& after) const;
     string getModelName() const;
 private:

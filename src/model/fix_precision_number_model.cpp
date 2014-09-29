@@ -45,9 +45,9 @@ int FixPrecisionNumberModel::decompressNumber(BinaryCode& code, unsigned int& nu
     return numberEncoderPtr->decode(code, num);
 }
 
-shared_ptr<AbstractNumber> FixPrecisionNumberModel::parseColumnStr(const string& columnStr){
+shared_ptr<AbstractNumber<unsigned int> > FixPrecisionNumberModel::parseColumnStr(const string& columnStr){
     FixPrecisionNumber number = FixPrecisionNumber::parse(columnStr, precision);
-    return shared_ptr<AbstractNumber>(new FixPrecisionNumber(number));
+    return shared_ptr<AbstractNumber<unsigned int> >(new FixPrecisionNumber(number));
 }
 
 string FixPrecisionNumberModel::toPlainStr(unsigned int num, const string& before, const string& after) const{

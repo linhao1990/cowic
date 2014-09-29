@@ -11,23 +11,28 @@
 
 #include "abstract_number.h"
 
-AbstractNumber::AbstractNumber(unsigned int numericVal, const string& beforeVal, const string& afterVal) 
+template <typename T>
+AbstractNumber<T>::AbstractNumber(T numericVal, const string& beforeVal, const string& afterVal) 
     : numeric(numericVal), before(beforeVal), after(afterVal){
 }
 
-unsigned int AbstractNumber::getNumeric() const{
+template <typename T>
+T AbstractNumber<T>::getNumeric() const{
     return numeric;
 }
 
-string AbstractNumber::getBefore() const{
+template <typename T>
+string AbstractNumber<T>::getBefore() const{
     return before;
 }
 
-string AbstractNumber::getAfter() const{
+template <typename T>
+string AbstractNumber<T>::getAfter() const{
     return after;
 }
 
-string AbstractNumber::to_plain_str() const{
+template <typename T>
+string AbstractNumber<T>::to_plain_str() const{
     std::stringstream sstream;
     sstream << getBefore();
 
@@ -37,10 +42,15 @@ string AbstractNumber::to_plain_str() const{
     return sstream.str();
 }
 
-bool AbstractNumber::operator ==(const AbstractNumber& other) const{
+template <typename T>
+bool AbstractNumber<T>::operator ==(const AbstractNumber& other) const{
     return getNumeric() == other.getNumeric();
 }
 
-bool AbstractNumber::operator !=(const AbstractNumber& other) const{
+template <typename T>
+bool AbstractNumber<T>::operator !=(const AbstractNumber& other) const{
     return !(this->operator== (other));
 }
+
+template class AbstractNumber<unsigned int>; 
+template class AbstractNumber<unsigned long long>; 

@@ -16,7 +16,7 @@
 
 #include "abstract_number.h"
 
-class IP : public AbstractNumber{
+class IP : public AbstractNumber<unsigned int>{
 public:
     IP(unsigned int numericVal, const string& beforeVal, const string& afterVal);
     string to_plain_str() const;

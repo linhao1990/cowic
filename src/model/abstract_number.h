@@ -14,10 +14,11 @@
 
 using std::string;
 
+template <typename T>
 class AbstractNumber{
 public:
-    AbstractNumber(unsigned int numericVal, const string& beforeVal, const string& afterVal);
-    unsigned int getNumeric() const;
+    AbstractNumber(T numericVal, const string& beforeVal, const string& afterVal);
+    T getNumeric() const;
     string getBefore() const;
     string getAfter() const;
     bool operator ==(const AbstractNumber& other) const;
@@ -25,7 +26,7 @@ public:
     virtual string to_plain_str() const;
     virtual bool isIllegal() const = 0;
 private:
-    unsigned int numeric;
+    T numeric;
     string before;
     string after;
 };

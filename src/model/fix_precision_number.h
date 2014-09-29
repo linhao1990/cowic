@@ -14,7 +14,7 @@
 
 #include "abstract_number.h"
 
-class FixPrecisionNumber : public AbstractNumber{
+class FixPrecisionNumber : public AbstractNumber<unsigned int>{
 public:
     FixPrecisionNumber(unsigned int numericVal, const string& beforeVal, const string& afterVal, const unsigned int precisionVal);
     bool isIllegal() const;

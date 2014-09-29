@@ -51,6 +51,7 @@ const char* EnumName<ColumnModelType>::List[] =
     "Timestamp",
     "IP",
     "Number",
+    "LongNumber",
     "FixPrecisionNumber"
 };
 

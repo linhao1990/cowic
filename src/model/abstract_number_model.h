@@ -19,6 +19,7 @@
 
 using std::shared_ptr;
 
+template <typename T>
 class AbstractNumberModel : public Model{
 public:
     AbstractNumberModel();
@@ -34,11 +35,11 @@ public:
     int decompressColumn(BinaryCode& code, string& columnStr, int column) const;
     virtual BitArray compressNumber(unsigned int num);
     virtual int decompressNumber(BinaryCode& code, unsigned int& num) const;
-    virtual shared_ptr<AbstractNumber> parseColumnStr(const string& columnStr) = 0;
-    virtual string toPlainStr(unsigned int num, const string& before, const string& after) const = 0;
-    static int legalBit;
-    static int beforeBit;
-    static int afterBit;
+    virtual shared_ptr<AbstractNumber<T> > parseColumnStr(const string& columnStr) = 0;
+    virtual string toPlainStr(T num, const string& before, const string& after) const = 0;
+    static const int legalBit;
+    static const int beforeBit;
+    static const int afterBit;
 protected:
     /* The model used to process string when the timestamp cannot be parsed successfully.
      */

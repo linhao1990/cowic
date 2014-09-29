@@ -17,9 +17,9 @@ IPModel::IPModel(const shared_ptr<DictionaryModel>& dictModelPtrVal)
     : AbstractNumberModel(dictModelPtrVal){
     }
 
-shared_ptr<AbstractNumber> IPModel::parseColumnStr(const string& columnStr){
+shared_ptr<AbstractNumber<unsigned int> > IPModel::parseColumnStr(const string& columnStr){
     IP ip = IP::parse(columnStr);
-    return shared_ptr<AbstractNumber>(new IP(ip));
+    return shared_ptr<AbstractNumber<unsigned int> >(new IP(ip));
 }
 
 string IPModel::toPlainStr(unsigned int num, const string& before, const string& after) const{

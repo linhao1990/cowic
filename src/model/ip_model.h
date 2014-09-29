@@ -12,11 +12,11 @@
 
 #include "abstract_number_model.h"
 
-class IPModel : public AbstractNumberModel{
+class IPModel : public AbstractNumberModel<unsigned int>{
 public:
     IPModel();
     IPModel(const shared_ptr<DictionaryModel>& dictModelPtrVal);
-    shared_ptr<AbstractNumber> parseColumnStr(const string& columnStr);
+    shared_ptr<AbstractNumber<unsigned int> > parseColumnStr(const string& columnStr);
     string toPlainStr(unsigned int num, const string& before, const string& after) const;
     string getModelName() const;
 private:
