@@ -14,7 +14,7 @@
 #include "helper.h"
 #include "spliter.h"
 
-const int DictionaryModel::Threshold = 1;
+const int DictionaryModel::Threshold = 2;
 
 const unsigned char freshChar = 129;
 const unsigned char auxiliaryChar = 130;
