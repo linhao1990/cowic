@@ -14,6 +14,8 @@
 #include "helper.h"
 #include "spliter.h"
 
+const int DictionaryModel::Threshold = 1;
+
 const unsigned char freshChar = 129;
 const unsigned char auxiliaryChar = 130;
 const string freshMark(1, freshChar);
@@ -29,7 +31,7 @@ void DictionaryModel::updateWord(const string& word){
 int filterLowFreqWord(const unordered_map<string, int>& word2FreqDict, unordered_map<string, int>& filteredDict){
     int lowFreqCount = 0;
     for(auto it = word2FreqDict.begin(); it != word2FreqDict.end(); it++){
-        if(isLowFreqWord(it->second)){
+        if(DictionaryModel::isLowFreqWord(it->second)){
             lowFreqCount++;
         } else{
             filteredDict[it->first] = it->second;
@@ -67,7 +69,7 @@ string dumpFreshEncoder(const shared_ptr<FreshEncoder>& freshEncoderPtr){
 string dumpDict(const unordered_map<string, int>& dict){
     string ret = "";
     for(auto it = dict.begin(); it != dict.end(); ++it){
-        if(!isLowFreqWord(it->second)){
+        if(!DictionaryModel::isLowFreqWord(it->second)){
             std::stringstream sstream;
             sstream << it->first << " " << it->second << "\n";
             ret += sstream.str();

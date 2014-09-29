@@ -46,14 +46,15 @@ public:
     int decompressWord(BinaryCode& code, string& word) const;
     int decompressColumn(BinaryCode& code, string& columnStr, int column) const;
     int getFreq(const string& word) const;
+    inline static bool isLowFreqWord(int freq){
+        return freq < DictionaryModel::Threshold;
+    }
 protected:
     unordered_map<string, int> word2FreqDict;
     shared_ptr<Encoder> encoderPtr;
     shared_ptr<FreshEncoder> freshEncoderPtr;
-};
 
-inline bool isLowFreqWord(int freq){
-    return freq <= 1;
-}
+    static const int Threshold;
+};
 
 #endif
