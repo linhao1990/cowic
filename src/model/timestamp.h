@@ -37,6 +37,7 @@ private:
      * */
     static string extractTimezone(const string& time_str, const string& format);
     static string translate2Env(const string& timezone);
+    static void setTimezone(const string& timezone);
 
     static void initRegex();
     static bool regex_initialized;

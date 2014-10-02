@@ -52,17 +52,22 @@ string Timestamp::translate2Env(const string& timezone){
         return "";
 }
 
+
+void Timestamp::setTimezone(const string& timezone){
+    if(!timezone.empty()){
+        string env_tz = Timestamp::translate2Env(timezone);
+        setenv("TZ", env_tz.c_str(), 1);
+        tzset();
+    }
+}
+
 //TODO Bug: If format contains str cannot be parsed successfully, 
 // the translation may be uncorrect.
 // e.g. timeStr = "[03/Feb/2003:03:07:23 +0100] "
 //      format = "[%d/%b/%Y:%H:%M:%S %z "  the last space in format is not parsed
 //      output = "[03/Feb/2003:03:07:23 +0100 ] " the not parsed space appears uncorrectly
 string Timestamp::to_plain_str(const string& format) const{
-    if(!timezone.empty()){
-        string env_tz = Timestamp::translate2Env(timezone);
-        setenv("TZ", env_tz.c_str(), 1);
-        tzset();
-    }
+    setTimezone(timezone);
 
     struct tm *lt = localtime(&timestamp);
     char szBuf[256] = {0}; 
@@ -103,15 +108,20 @@ string Timestamp::extractTimezone(const string& time_str, const string& format){
     return "";
 }
 
+string cutAfterString(char* parsedOffset, const string& time_str){
+    unsigned int parsed_bit = (unsigned int)(parsedOffset - time_str.c_str());
+    return time_str.substr(parsed_bit);
+}
+
 Timestamp Timestamp::parse(const string& time_str, const string& format){
     string timezone = Timestamp::extractTimezone(time_str, format);
+    setTimezone(timezone);
     //parse timestamp
     struct tm tm_time;
-    char * ret = strptime(time_str.c_str(), format.c_str(), &tm_time);
-    if(ret == NULL)
+    char * parsedOffset = strptime(time_str.c_str(), format.c_str(), &tm_time);
+    if(parsedOffset == NULL)
         return Timestamp::illegal;
-    unsigned int parsed_bit = (unsigned int)(ret - time_str.c_str());
-    string after = time_str.substr(parsed_bit);
+    string after = cutAfterString(parsedOffset, time_str);
     time_t timestamp = mktime(&tm_time);
     return Timestamp(timestamp, timezone, after);
 }
