@@ -40,6 +40,11 @@ private:
      */
     shared_ptr<DictionaryModel> dictModelPtr;
     string format;
+    // used to decide whether it's proper to using timestamp model
+    static int totalNum;
+    static int illegalNum;
+    static const double thresholdRatio;
+    void showWarningMessage() const;
 };
 
 #endif

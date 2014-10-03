@@ -14,6 +14,10 @@
 #include "helper.h"
 #include "compressor_factory.h"
 
+int TimestampModel::totalNum = 0;
+int TimestampModel::illegalNum = 0;
+const double TimestampModel::thresholdRatio = 0.1;
+
 TimestampModel::TimestampModel() : Model(), dictModelPtr(), format(){
 }
 
@@ -27,6 +31,7 @@ void TimestampModel::updateColumn(const string& columnStr, int column){
     // Dispatch to dictModelPtr when fail
     if(ts == Timestamp::illegal){
         dictModelPtr->updateColumn(columnStr, column);
+        ++illegalNum;
     } else{
         // update timezone, and after str
         if(!ts.getTimezone().empty())
@@ -34,9 +39,20 @@ void TimestampModel::updateColumn(const string& columnStr, int column){
         if(!ts.getAfter().empty())
             dictModelPtr->updateColumn(ts.getAfter(), column);
     }
+    ++totalNum;
+}
+
+void TimestampModel::showWarningMessage() const{
+    bool tooManyError = (illegalNum + 0.0) / totalNum > thresholdRatio;
+    if(tooManyError){
+        cout << "\nWarning! Cannot parse timestamp column correctly!" << endl
+             <<"\tIn training set. Total Entry Num:" << totalNum << " Illegal Entry Num:" << illegalNum << endl
+             << "\tPlease check you configuration and make sure timestamp format is correct!" << endl;
+    }
 }
 
 string TimestampModel::dump() const{
+    showWarningMessage();
     std::stringstream sstream;
     string modelDumpStr = dictModelPtr->dump();
     sstream << getModelName() << "\n" 

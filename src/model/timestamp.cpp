@@ -52,7 +52,6 @@ string Timestamp::translate2Env(const string& timezone){
         return "";
 }
 
-
 void Timestamp::setTimezone(const string& timezone){
     if(!timezone.empty()){
         string env_tz = Timestamp::translate2Env(timezone);
